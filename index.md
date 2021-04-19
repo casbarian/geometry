@@ -1,6 +1,6 @@
 # 2021 Javascript Example
 
-[Congruent Triangles Game](CongruentTriangleGame.html)
+[Congruent Triangles Game](https://casbarian.github.io/geometry/CongruentTriangleGame.html)
 
 
 
