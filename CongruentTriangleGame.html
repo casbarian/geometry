@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Congruent Triangle Game</title>
+
+    <!-- Code for the Game -->
+    <script>
+        // This will be the initial screen for the game.
+        // Title, directions, and start button provided.
+
+        // Triangle measurement global variables.
+        var preimageAngles = [0, 0, 0];
+        var imageAngles = [0, 0, 0];
+        var preimageSides = [0, 0, 0];
+        var imageSides = [0, 0, 0];
+        var score = 0;
+        var topscore = 0;
+
+        function setup(){
+            // Background
+            ctx = document.getElementById("myCanvas").getContext("2d");
+            ctx.fillStyle = "beige";
+            ctx.fillRect(0,0,500,300);
+
+            // Preimage
+            ctx = document.getElementById("myCanvas").getContext("2d");
+            ctx.beginPath();
+            ctx.moveTo(50,250);
+            ctx.lineTo(125,50);
+            ctx.lineTo(200,250);
+            ctx.lineTo(50,250);
+            ctx.fillStyle = "white";
+            ctx.fill();
+            ctx.stroke();
+
+            // Image
+            ctx = document.getElementById("myCanvas").getContext("2d");
+            ctx.beginPath();
+            ctx.moveTo(300,250);
+            ctx.lineTo(375,50);
+            ctx.lineTo(450,250);
+            ctx.lineTo(300,250);
+            ctx.fillStyle = "lightcoral";
+            ctx.fill();
+            ctx.stroke();
+
+            // Reset Arrays to zeroes
+            preimageAngles = [0, 0, 0];
+            imageAngles = [0, 0, 0];
+            preimageSides = [0, 0, 0];
+            imageSides = [0, 0, 0];
+        }
+
+
+        function load_preimage(){
+            // Generate Angles and load onto Pre-Image
+            preimageAngles[0] = Math.floor(Math.random() * 178) + 1;
+            var degreeRemaining = 180;
+            degreeRemaining -= preimageAngles[0];
+            preimageAngles[1] = Math.floor(Math.random() * (degreeRemaining - 1)) + 1;
+            degreeRemaining -= preimageAngles[1];
+            preimageAngles[2] = degreeRemaining;
+
+            ctx = document.getElementById("myCanvas").getContext("2d");
+            ctx.font = "12px Arial";
+            ctx.fillStyle = "black";
+            ctx.fillText(preimageAngles[0], 115, 90);
+
+            ctx = document.getElementById("myCanvas").getContext("2d");
+            ctx.font = "12px Arial";
+            ctx.fillStyle = "black";
+            ctx.fillText(preimageAngles[1], 170, 240);
+
+            ctx = document.getElementById("myCanvas").getContext("2d");
+            ctx.font = "12px Arial";
+            ctx.fillStyle = "black";
+            ctx.fillText(preimageAngles[2], 60, 240);
+
+            // Generate Sides and load onto Pre-Image
+            preimageSides[0] = Math.floor(Math.random() * 20) + 1;
+            var tempAngle0 = Math.PI * preimageAngles[0] / 180;
+            var tempAngle1 = Math.PI * preimageAngles[1] / 180;
+            var tempAngle2 = Math.PI * preimageAngles[2] / 180;
+            preimageSides[1] = Math.sin(tempAngle1) * preimageSides[0] / Math.sin(tempAngle0);
+
+            preimageSides[1] = preimageSides[1].toFixed(2);
+            preimageSides[2] = Math.sin(tempAngle2) * preimageSides[0] / Math.sin(tempAngle0);
+            preimageSides[2] = preimageSides[2].toFixed(2);
+
+            ctx = document.getElementById("myCanvas").getContext("2d");
+            ctx.font = "12px Arial";
+            ctx.fillStyle = "black";
+            ctx.fillText(preimageSides[0], 125, 265);
+
+            ctx = document.getElementById("myCanvas").getContext("2d");
+            ctx.font = "12px Arial";
+            ctx.fillStyle = "black";
+            ctx.fillText(preimageSides[1], 50, 150);
+
+            ctx = document.getElementById("myCanvas").getContext("2d");
+            ctx.font = "12px Arial";
+            ctx.fillStyle = "black";
+            ctx.fillText(preimageSides[2], 175, 150);
+
+        }
+
+        function set_value(valueNum){
+            if (valueNum == 1 || valueNum == 2 || valueNum == 3){
+                imageAngles[valueNum - 1] = preimageAngles[valueNum -1];
+            }else{
+                imageSides[valueNum - 4] = preimageSides[valueNum - 4];
+            }
+        }
+
+        function load_image(){
+            // pick 3 random number locations on triangle.
+            var value1 = Math.floor(Math.random()*6)+1;
+            while(true){
+                var value2 = Math.floor(Math.random()*6)+1;
+                if (value2 != value1){
+                    break;
+                }
+            }
+            while(true){
+                var value3 = Math.floor(Math.random()*6)+1;
+                if (value3 != value1 && value3 != value2){
+                    break;
+                }
+            }
+
+            // set value of value 1, 2, and 3 to place on triangle.
+            //  1, 2, 3 represent angles.  4, 5, 6 represent sides.
+            //  If numbers get changed to non-zero, they show up on screen.
+            set_value(value1);
+            set_value(value2);
+            set_value(value3);
+            //  set_value(valueNum) replaces this repetitive code below.
+            /*
+            if (value1 == 1 || value1 == 2 || value1 == 3){
+                imageAngles[value1 - 1] = preimageAngles[value1 -1];
+            }else{
+                imageSides[value1 - 4] = preimageSides[value1 - 4];
+            }
+
+            // set value of value 2 to place on triangle
+            if (value2 == 1 || value2 == 2 || value2 == 3){
+                imageAngles[value2 - 1] = preimageAngles[value2 - 1];
+            }else{
+                imageSides[value2 - 4] = preimageSides[value2 - 4];
+            }
+
+            // set value of value 3 to place on triangle
+            if (value3 == 1 || value3 == 2 || value3 == 3){
+                imageAngles[value3 - 1] = preimageAngles[value3 -1];
+            }else{
+                imageSides[value3 - 4] = preimageSides[value3 - 4];
+            }
+            */
+
+            // place nonzero image angles on screen.
+            for(i = 0; i < 3; i++){
+                if (imageAngles[i] != 0){
+                    ctx = document.getElementById("myCanvas").getContext("2d");
+                    ctx.font = "12px Arial";
+                    ctx.fillStyle = "black";
+                    if( i == 0) {
+                        ctx.fillText(imageAngles[0], 365, 90);
+                    } else if ( i == 1) {
+                        ctx.fillText(imageAngles[1], 420, 240);
+                    } else {
+                        ctx.fillText(imageAngles[2], 310, 240);
+                    }
+                }
+            }
+            // place nonzero image sides on screen.
+            for(i = 0; i < 3; i++){
+                if (imageSides[i] != 0){
+                    ctx = document.getElementById("myCanvas").getContext("2d");
+                    ctx.font = "12px Arial";
+                    ctx.fillStyle = "black";
+                    if(i == 0) {
+                        ctx.fillText(imageSides[0], 375, 265);
+                    } else if (i == 1) {
+                        ctx.fillText(imageSides[1], 300, 150);
+                    } else {
+                        ctx.fillText(imageSides[2], 425, 150);
+                    }
+                }
+            }
+
+        }
+
+        function new_problem(){
+            setup();
+            load_preimage();
+            load_image();
+            ctx = document.getElementById("myCanvas").getContext("2d");
+            ctx.font = "16px Arial";
+            ctx.fillStyle = "black";
+            ctx.fillText("Top Score: " + topscore, 25, 25);
+            ctx = document.getElementById("myCanvas").getContext("2d");
+            ctx.font = "16px Arial";
+            ctx.fillStyle = "black";
+            ctx.fillText("Current Score: " + score, 350, 25);
+
+        }
+
+        function answerSSS(){
+            if(imageSides[0] != 0 && imageSides[1] != 0 && imageSides[2] != 0){
+                continueGame();
+            }else{
+                alert("Sorry!  It was not SSS.")
+                endGame();
+            }
+        }
+        function answerSAS(){
+            if(imageSides[0] != 0 && imageSides[1] != 0 && imageAngles[2] != 0){
+                continueGame();
+            }else if(imageSides[1] != 0 && imageSides[2] != 0 && imageAngles[0] != 0){
+                continueGame();
+            }else if(imageSides[2] != 0 && imageSides[0] != 0 && imageAngles[1] != 0){
+                continueGame();
+            }else{
+                alert("Sorry!  It was not SAS.")
+                endGame();
+            }
+        }
+        function answerASA(){
+            if(imageAngles[0] != 0 && imageAngles[1] != 0 && imageSides[2] != 0){
+                continueGame();
+            }else if(imageAngles[1] != 0 && imageAngles[2] != 0 && imageSides[0] != 0){
+                continueGame();
+            }else if(imageAngles[2] != 0 && imageAngles[0] != 0 && imageSides[1] != 0){
+                continueGame();
+            }else {
+                alert("Sorry!  It was not ASA.")
+                endGame();
+            }
+        }
+        function answerAAS(){
+            if(imageAngles[0] != 0 && imageAngles[1] != 0 && imageSides[0] != 0){
+                continueGame();
+            }else if(imageAngles[0] != 0 && imageAngles[1] != 0 && imageSides[1] != 0) {
+                continueGame();
+            }else if(imageAngles[1] != 0 && imageAngles[2] != 0 && imageSides[1] != 0){
+                continueGame();
+            }else if(imageAngles[1] != 0 && imageAngles[2] != 0 && imageSides[2] != 0){
+                continueGame();
+            }else if(imageAngles[2] != 0 && imageAngles[0] != 0 && imageSides[0] != 0){
+                continueGame();
+            }else if(imageAngles[2] != 0 && imageAngles[0] != 0 && imageSides[2] != 0){
+                continueGame();
+            }else{
+                alert("Sorry!  It was not AAS.")
+                endGame();
+            }
+        }
+        function answerNo(){
+            // check if it's really SSS
+            if(imageSides[0] != 0 && imageSides[1] != 0 && imageSides[2] != 0){
+                alert("Sorry!  The correct answer was no.")
+                endGame();
+            // check if it's really SAS
+            }else if(imageSides[0] != 0 && imageSides[1] != 0 && imageAngles[2] != 0){
+                alert("Sorry!  The correct answer was no.")
+                endGame();
+            }else if(imageSides[1] != 0 && imageSides[2] != 0 && imageAngles[0] != 0){
+                alert("Sorry!  The correct answer was no.")
+                endGame();
+            }else if(imageSides[2] != 0 && imageSides[0] != 0 && imageAngles[1] != 0) {
+                alert("Sorry!  The correct answer was no.")
+                endGame();
+            // ASA check
+            }else if(imageAngles[0] != 0 && imageAngles[1] != 0 && imageSides[2] != 0){
+                alert("Sorry!  The correct answer was no.")
+                endGame();
+            }else if(imageAngles[1] != 0 && imageAngles[2] != 0 && imageSides[0] != 0){
+                alert("Sorry!  The correct answer was no.")
+                endGame();
+            }else if(imageAngles[2] != 0 && imageAngles[0] != 0 && imageSides[1] != 0) {
+                alert("Sorry!  The correct answer was no.")
+                endGame();
+            // check if it's really AAS
+            }else if(imageAngles[0] != 0 && imageAngles[1] != 0 && imageSides[0] != 0){
+                alert("Sorry!  The correct answer was no.")
+                endGame();
+            }else if(imageAngles[0] != 0 && imageAngles[1] != 0 && imageSides[1] != 0) {
+                alert("Sorry!  The correct answer was no.")
+                endGame();
+            }else if(imageAngles[1] != 0 && imageAngles[2] != 0 && imageSides[1] != 0){
+                alert("Sorry!  The correct answer was no.")
+                endGame();
+            }else if(imageAngles[1] != 0 && imageAngles[2] != 0 && imageSides[2] != 0){
+                alert("Sorry!  The correct answer was no.")
+                endGame();
+            }else if(imageAngles[2] != 0 && imageAngles[0] != 0 && imageSides[0] != 0){
+                alert("Sorry!  The correct answer was no.")
+                endGame();
+            }else if(imageAngles[2] != 0 && imageAngles[0] != 0 && imageSides[2] != 0){
+                alert("Sorry!  The correct answer was no.")
+                endGame();
+            }else{
+                continueGame();
+            }
+        }
+
+        function continueGame(){
+            score += 1;
+            new_problem();
+        }
+        function endGame(){
+            if(score > topscore){
+                topscore = score;
+                alert("New Top Score!");
+            }
+            alert("Good try!  Click on New Game to try again!");
+        }
+        function newGame(){
+            score = 0;
+            new_problem();
+        }
+
+    </script>
+</head>
+
+<body onload="setup()">
+    <h1>Congruent Triangle Game 1.0</h1>
+    <p>Determine why the triangles are congruent(SSS, SAS, ASA, or AAS).</p>
+    <p>If it is none of those, choose No.  See how many you can get correct in a row!</p>
+    <canvas id="myCanvas" width="500" height="300" style="border:2px solid #000000;">
+    </canvas>
+    <br>
+    <button type="button" id="answerSSS" onclick = "answerSSS()">SSS</button>
+    <button type="button" id="answerSAS" onclick = "answerSAS()">SAS</button>
+    <button type="button" id="answerASA" onclick = "answerASA()">ASA</button>
+    <button type="button" id="answerAAS" onclick = "answerAAS()">AAS</button>
+    <button type="button" id="answerNo" onclick = "answerNo()">No</button>
+    <br>
+    <button type="button" id="newGame" onclick="newGame()">New Game</button>
+
+</body>
+</html>
