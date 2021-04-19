@@ -45,6 +45,10 @@
             ctx.fill();
             ctx.stroke();
 
+            ctx = document.getElementById("myCanvas").getContext("2d");
+            ctx.font = "20px ComicSans";
+            ctx.fillStyle = "red";
+            ctx.fillText("Click New Game to Start!", 150, 25);
             // Reset Arrays to zeroes
             preimageAngles = [0, 0, 0];
             imageAngles = [0, 0, 0];
@@ -135,28 +139,6 @@
             set_value(value1);
             set_value(value2);
             set_value(value3);
-            //  set_value(valueNum) replaces this repetitive code below.
-            /*
-            if (value1 == 1 || value1 == 2 || value1 == 3){
-                imageAngles[value1 - 1] = preimageAngles[value1 -1];
-            }else{
-                imageSides[value1 - 4] = preimageSides[value1 - 4];
-            }
-
-            // set value of value 2 to place on triangle
-            if (value2 == 1 || value2 == 2 || value2 == 3){
-                imageAngles[value2 - 1] = preimageAngles[value2 - 1];
-            }else{
-                imageSides[value2 - 4] = preimageSides[value2 - 4];
-            }
-
-            // set value of value 3 to place on triangle
-            if (value3 == 1 || value3 == 2 || value3 == 3){
-                imageAngles[value3 - 1] = preimageAngles[value3 -1];
-            }else{
-                imageSides[value3 - 4] = preimageSides[value3 - 4];
-            }
-            */
 
             // place nonzero image angles on screen.
             for(i = 0; i < 3; i++){
@@ -191,8 +173,20 @@
 
         }
 
+        function success(){
+            ctx = document.getElementById("myCanvas").getContext("2d");
+            ctx.font = "24px ComicSans";
+            ctx.fillStyle = "red";
+            ctx.fillText("CORRECT!", 180, 100);
+        }
         function new_problem(){
             setup();
+
+            // remove start game text. This isn't a great solution.
+            ctx = document.getElementById("myCanvas").getContext("2d");
+            ctx.fillStyle = "beige";
+            ctx.fillRect(150,0, 225, 40);
+
             load_preimage();
             load_image();
             ctx = document.getElementById("myCanvas").getContext("2d");
@@ -210,7 +204,6 @@
             if(imageSides[0] != 0 && imageSides[1] != 0 && imageSides[2] != 0){
                 continueGame();
             }else{
-                alert("Sorry!  It was not SSS.")
                 endGame();
             }
         }
@@ -222,7 +215,6 @@
             }else if(imageSides[2] != 0 && imageSides[0] != 0 && imageAngles[1] != 0){
                 continueGame();
             }else{
-                alert("Sorry!  It was not SAS.")
                 endGame();
             }
         }
@@ -234,7 +226,6 @@
             }else if(imageAngles[2] != 0 && imageAngles[0] != 0 && imageSides[1] != 0){
                 continueGame();
             }else {
-                alert("Sorry!  It was not ASA.")
                 endGame();
             }
         }
@@ -252,53 +243,39 @@
             }else if(imageAngles[2] != 0 && imageAngles[0] != 0 && imageSides[2] != 0){
                 continueGame();
             }else{
-                alert("Sorry!  It was not AAS.")
                 endGame();
             }
         }
         function answerNo(){
             // check if it's really SSS
             if(imageSides[0] != 0 && imageSides[1] != 0 && imageSides[2] != 0){
-                alert("Sorry!  The correct answer was no.")
                 endGame();
             // check if it's really SAS
             }else if(imageSides[0] != 0 && imageSides[1] != 0 && imageAngles[2] != 0){
-                alert("Sorry!  The correct answer was no.")
                 endGame();
             }else if(imageSides[1] != 0 && imageSides[2] != 0 && imageAngles[0] != 0){
-                alert("Sorry!  The correct answer was no.")
                 endGame();
             }else if(imageSides[2] != 0 && imageSides[0] != 0 && imageAngles[1] != 0) {
-                alert("Sorry!  The correct answer was no.")
                 endGame();
             // ASA check
             }else if(imageAngles[0] != 0 && imageAngles[1] != 0 && imageSides[2] != 0){
-                alert("Sorry!  The correct answer was no.")
                 endGame();
             }else if(imageAngles[1] != 0 && imageAngles[2] != 0 && imageSides[0] != 0){
-                alert("Sorry!  The correct answer was no.")
                 endGame();
             }else if(imageAngles[2] != 0 && imageAngles[0] != 0 && imageSides[1] != 0) {
-                alert("Sorry!  The correct answer was no.")
                 endGame();
             // check if it's really AAS
             }else if(imageAngles[0] != 0 && imageAngles[1] != 0 && imageSides[0] != 0){
-                alert("Sorry!  The correct answer was no.")
                 endGame();
             }else if(imageAngles[0] != 0 && imageAngles[1] != 0 && imageSides[1] != 0) {
-                alert("Sorry!  The correct answer was no.")
                 endGame();
             }else if(imageAngles[1] != 0 && imageAngles[2] != 0 && imageSides[1] != 0){
-                alert("Sorry!  The correct answer was no.")
                 endGame();
             }else if(imageAngles[1] != 0 && imageAngles[2] != 0 && imageSides[2] != 0){
-                alert("Sorry!  The correct answer was no.")
                 endGame();
             }else if(imageAngles[2] != 0 && imageAngles[0] != 0 && imageSides[0] != 0){
-                alert("Sorry!  The correct answer was no.")
                 endGame();
             }else if(imageAngles[2] != 0 && imageAngles[0] != 0 && imageSides[2] != 0){
-                alert("Sorry!  The correct answer was no.")
                 endGame();
             }else{
                 continueGame();
@@ -307,14 +284,30 @@
 
         function continueGame(){
             score += 1;
-            new_problem();
+            success();
+            setTimeout(new_problem, 500);
         }
         function endGame(){
             if(score > topscore){
+                ctx = document.getElementById("myCanvas").getContext("2d");
+                ctx.font = "20px ComicSans";
+                ctx.fillStyle = "red";
+                ctx.fillText("NEW TOP SCORE!", 170, 75);
                 topscore = score;
-                alert("New Top Score!");
+                // Change the top score.
+                ctx = document.getElementById("myCanvas").getContext("2d");
+                ctx.fillStyle = "beige";
+                ctx.fillRect(0,0,150,40);
+                ctx = document.getElementById("myCanvas").getContext("2d");
+                ctx.font = "16px Arial";
+                ctx.fillStyle = "black";
+                ctx.fillText("Top Score: " + topscore, 25, 25);
+
             }
-            alert("Good try!  Click on New Game to try again!");
+            ctx = document.getElementById("myCanvas").getContext("2d");
+            ctx.font = "24px ComicSans";
+            ctx.fillStyle = "red";
+            ctx.fillText("GAME OVER.", 180, 105);
         }
         function newGame(){
             score = 0;
@@ -325,7 +318,7 @@
 </head>
 
 <body onload="setup()">
-    <h1>Congruent Triangle Game 1.0</h1>
+    <h1>Congruent Triangle Game 2.0</h1>
     <p>Determine why the triangles are congruent(SSS, SAS, ASA, or AAS).</p>
     <p>If it is none of those, choose No.  See how many you can get correct in a row!</p>
     <canvas id="myCanvas" width="500" height="300" style="border:2px solid #000000;">
@@ -338,6 +331,7 @@
     <button type="button" id="answerNo" onclick = "answerNo()">No</button>
     <br>
     <button type="button" id="newGame" onclick="newGame()">New Game</button>
+    <p><i>Alert messages replaced with internal messages in version 2.</p></i>
 
 </body>
 </html>
