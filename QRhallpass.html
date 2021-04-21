@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DIGITAL HALL PASS</title>
+    <script>
+        var d = new Date();
+        var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        var months = ["Jan.", "Feb.", "Mar.", "Apr.", "May.", "Jun.", "Jul.", "Aug.", "Sep.", "Oct.", "Nov.", "Dec."];
+        var minutes = d.getMinutes();
+        if(minutes < 10){
+            minutes = "0" + minutes;
+        }
+
+        function createPass(){
+            var failedAttempts = 0;
+            var password = prompt("Enter a password.");
+            while(password != "1234"){
+                failedAttempts += 1;
+                if(failedAttempts > 3){
+                    break;
+                }
+                password = prompt("Enter a password.");
+            }
+            ctx = document.getElementById("myCanvas").getContext("2d");
+            ctx.font = "36px Arial";
+            ctx.fillStyle = "black";
+            ctx.fillText("Casbarian Room 345", 25, 40);
+            ctx.fillText("Bathroom Pass", 25, 80);
+            ctx.fillText("---------------", 25,120)
+            ctx.fillText(days[d.getDay()] + ", " + months[d.getMonth()] + " " + d.getDate(), 25, 160);
+            ctx.fillText("Start Time: " + d.getHours() + ":" + minutes, 25, 200);
+        }
+    </script>
+</head>
+<body onload="createPass()">
+    <canvas id="myCanvas" width="400" height="225" style="border:2px solid #000000;">
+    </canvas>
+</body>
+</html>
