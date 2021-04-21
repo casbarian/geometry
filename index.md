@@ -2,9 +2,9 @@
 
 [Congruent Triangles Game](https://casbarian.github.io/geometry/CongruentTriangleGame.html)
 
-[Acute Right Obtuse Game] (https://casbarian.github.io/geometry/AcuteRightObtuse.html)
+[Acute Right Obtuse Game](https://casbarian.github.io/geometry/AcuteRightObtuse.html)
 
-[QR Hall Pass] (https://casbarian.github.io/geometry/QRhallpass.html)
+[QR Hall Pass](https://casbarian.github.io/geometry/QRhallpass.html)
 
 ## Welcome to GitHub Pages
 
