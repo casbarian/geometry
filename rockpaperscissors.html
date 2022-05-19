@@ -1,0 +1,142 @@
+<html>
+    <head>
+        <title>Rock Paper Scissors</title>
+        <script>
+            var playerChoice;
+            var compChoice;
+            var playerWinCount = 0;
+            var computerWinCount = 0;
+            var tieCount = 0;
+
+            function computerAI(){
+                // compChoice is 0, 1, or 2
+                compChoice = Math.floor(Math.random() * 3);
+                if(compChoice == 0){
+                    document.getElementById("ComputerChoice").innerHTML = "<img src='https://codehs.com/uploads/d95c29b823e0aeae4c590c19c1c10017'>";
+                }else if (compChoice == 1){
+                    document.getElementById("ComputerChoice").innerHTML = "<img src='https://codehs.com/uploads/81231f755544e47e25ea80a9d902d084'>";
+                }else{
+                    document.getElementById("ComputerChoice").innerHTML = "<img src='https://codehs.com/uploads/b466b438f05f3e97d9b67663d3cae03b'>";
+
+                }
+            }
+            function rock(){
+                playerChoice = "Rock";
+                computerAI();
+                document.getElementById("PlayerChoice").innerHTML = "<img src='https://codehs.com/uploads/6a2099c8514442da0c76fb0c6af7f842'>";  
+                whoWon();
+            }
+             function paper(){
+                playerChoice = "Paper";
+                computerAI();
+                document.getElementById("PlayerChoice").innerHTML = "<img src='https://codehs.com/uploads/b8ddd40f5146bae965677c3761195f78'>";  
+                whoWon();
+            }
+            function scissors(){
+                playerChoice = "Scissors";
+                computerAI();
+                document.getElementById("PlayerChoice").innerHTML = "<img src='https://codehs.com/uploads/44a4ced1bbb731d41a19afec136b8b7b'>";  
+                whoWon();
+            }            
+            function whoWon(){
+                if( (playerChoice == "Rock" && compChoice == 2)
+                    || (playerChoice == "Paper" && compChoice == 0)
+                    || (playerChoice == "Scissors" && compChoice == 1 )){
+                    document.getElementById("PlayerWin").bgColor = "Green";
+                    document.getElementById("ComputerWin").bgColor = "White";
+                    document.getElementById("Announcer").innerHTML = "Winner: Player"
+                    playerWinCount++;
+                }else if( (playerChoice == "Rock" && compChoice == 0)
+                    || (playerChoice == "Paper" && compChoice == 1)
+                    || (playerChoice == "Scissors" && compChoice == 2) ){
+                    document.getElementById("ComputerWin").bgColor = "Red";
+                    document.getElementById("PlayerWin").bgColor = "Red";
+                    document.getElementById("Announcer").innerHTML = "Winner: Tie"
+                    tieCount++;
+                }else{
+                    document.getElementById("ComputerWin").bgColor = "Green";
+                    document.getElementById("PlayerWin").bgColor = "White";
+                    document.getElementById("Announcer").innerHTML = "Winner: Computer"
+                    computerWinCount++;
+                }
+                document.getElementById("Scoreboard").innerHTML = "Player Wins: " + playerWinCount + "  Computer Wins: " + computerWinCount + "  Ties: " + tieCount;
+            }
+            
+        </script>
+        <style>
+            table{
+                border: 1px black;
+                border-collapse: collapse;
+            }
+            tr{
+                height:50px;
+            }
+            td{
+                width:75px;
+            }
+            img{
+                width:75px;
+            }    
+            img.wiggle:hover {
+                animation: shake 0.5s;
+                animation-iteration-count: infinite;
+            }
+
+            @keyframes shake {
+              0% { transform: translate(1px, 1px) rotate(0deg); }
+              10% { transform: translate(-1px, -2px) rotate(-1deg); }
+              20% { transform: translate(-3px, 0px) rotate(1deg); }
+              30% { transform: translate(3px, 2px) rotate(0deg); }
+              40% { transform: translate(1px, -1px) rotate(1deg); }
+              50% { transform: translate(-1px, 2px) rotate(-1deg); }
+              60% { transform: translate(-3px, 1px) rotate(0deg); }
+              70% { transform: translate(3px, 1px) rotate(-1deg); }
+              80% { transform: translate(-1px, -1px) rotate(1deg); }
+              90% { transform: translate(1px, 2px) rotate(0deg); }
+              100% { transform: translate(1px, -2px) rotate(-1deg); }
+            }
+            
+        </style>
+    </head>
+    <body>
+        <h1>Rock Paper Scissors Game</h1>
+        <p id="Scoreboard">Player Wins: 0 Computer Wins: 0 Ties: 0</p>
+        <!-- This is going to be a table to organize our graphics. -->
+        <!-- We will show the player and computer images and the results. -->
+        <h3>Click on your choice and see if you win!</h3>
+        <table border="1">
+            <tbody>
+                <tr>
+                    <th colspan="2" id="PlayerWin">Player</th>
+                    <th colspan="2" id="ComputerWin">Computer</th>
+                </tr>
+                <tr>
+                    <td><img src="https://codehs.com/uploads/6a2099c8514442da0c76fb0c6af7f842"
+                            onclick="rock()"
+                            class="wiggle"></td>
+                    <td></td>
+                    <td></td>
+                    <td><img src="https://codehs.com/uploads/d95c29b823e0aeae4c590c19c1c10017"></td>
+                </tr>
+                <tr style="height:50px">
+                    <td><img src="https://codehs.com/uploads/b8ddd40f5146bae965677c3761195f78"
+                            onclick="paper()"
+                            class="wiggle"></td>
+                    <th id="PlayerChoice" style="background-color:Grey;">?</th>
+                    <th id="ComputerChoice" style="background-color:Grey;">?</th>
+                    <td><img src="https://codehs.com/uploads/81231f755544e47e25ea80a9d902d084"></td>                    
+                </tr>
+                <tr>
+                    <td><img src="https://codehs.com/uploads/44a4ced1bbb731d41a19afec136b8b7b"
+                            onclick="scissors()"
+                            class="wiggle"></td>
+                    <td></td>
+                    <td></td>
+                    <td><img src="https://codehs.com/uploads/b466b438f05f3e97d9b67663d3cae03b"></td>                    
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3 id="Announcer"></h3>
+    </body>
+</html>
