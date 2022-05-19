@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <title>Quadratic Formula Calculator</title>
+        <script>
+            function quadformula(){
+                var valueA = prompt("What is A");
+                var valueB = prompt("What is B");
+                var valueC = prompt("What is C");
+                
+                
+                var discriminant = valueB * valueB - 4 * valueA * valueC;
+                var x1 = (-valueB + Math.sqrt(discriminant))/(2*valueA);
+                var x2 = (-valueB - Math.sqrt(discriminant))/(2*valueA);                
+                
+                alert("x = " + x1 + " and " + x2);
+                
+            }
+        </script>      
+    </head>
+    <body>
+        <button type="button" onclick="quadformula()">Solve</button>
+    </body>
+
+</html>
